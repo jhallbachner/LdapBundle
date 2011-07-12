@@ -52,9 +52,9 @@ class LdapUserManager implements LdapUserManagerInterface
      */
     public function hasUsername($username)
     {
-        $dn = sprintf('%s=%s,%s', $this->usernameAttribute, $username, $this->userBaseDn);
+        $filter = sprintf('(&(%s=%s)%s)', $this->usernameAttribute, $username, $this->userFilter);
 
-        return (boolean) $this->ldap->count($this->userFilter, $dn, Ldap::SEARCH_SCOPE_BASE);
+        return (boolean) $this->ldap->count($filter, $this->userBaseDn, Ldap::SEARCH_SCOPE_ONE);
     }
 
     /**
